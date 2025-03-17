@@ -94,6 +94,7 @@ public class ProductService {
     SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
         .withProcedureName("delete_product");
 
+    
     jdbcCall.execute(Map.of("p_id", id));
   }
 }
