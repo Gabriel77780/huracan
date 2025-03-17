@@ -62,6 +62,9 @@
                   <a href="#" id="productFragment">
                     <span class="sub-item">Productos</span>
                   </a>
+                  <a href="#" id="customerFragment">
+                    <span class="sub-item">Clientes</span>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -401,6 +404,12 @@
       e.preventDefault();
       $('#dynamicContent').load('/productFragment');
     });
+
+    $('#customerFragment').click(function(e) {
+      e.preventDefault();
+      $('#dynamicContent').load('/customerFragment');
+    });
+
   });
 </script>
 

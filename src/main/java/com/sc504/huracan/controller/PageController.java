@@ -31,4 +31,9 @@ public class PageController {
     return "product :: content";
   }
 
+  @GetMapping("/customerFragment")
+  public String getCustomerFragment() {
+    return "customer :: content";
+  }
+
 }

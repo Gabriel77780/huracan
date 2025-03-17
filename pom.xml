@@ -93,8 +93,8 @@
 				<artifactId>flyway-maven-plugin</artifactId>
 				<configuration>
 					<url>jdbc:oracle:thin:@//localhost:1521/free</url>
-					<user>flyway_user</user>
-					<password>1234</password>
+					<user>system</user>
+					<password>oracle</password>
 				</configuration>
 			</plugin>
 		</plugins>
