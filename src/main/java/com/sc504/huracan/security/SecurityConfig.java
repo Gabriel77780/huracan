@@ -39,7 +39,7 @@ public class SecurityConfig {
   @Bean
   public UserDetailsService userDetailsService() {
     return username -> {
-      String query = "SELECT username, password, role FROM users WHERE username = ?";
+      String query = "SELECT username, password, role FROM user WHERE username = ?";
       return jdbcTemplate.queryForObject(query, (rs, rowNum) -> {
         String password = rs.getString("password");
         String role = rs.getString("role");
