@@ -18,7 +18,6 @@ public class SupplierService {
     this.jdbcTemplate = jdbcTemplate;
   }
 
-  // Create Supplier
   public void createSupplier(Supplier supplier) {
     SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
         .withProcedureName("create_supplier");
@@ -34,7 +33,6 @@ public class SupplierService {
     ));
   }
 
-  // Get Supplier by ID
   public Supplier getSupplierById(Long id) {
     SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
         .withProcedureName("get_supplier_by_id")
@@ -57,7 +55,6 @@ public class SupplierService {
     );
   }
 
-  // Update Supplier
   public void updateSupplier(Long id, Supplier supplier) {
     SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
         .withProcedureName("update_supplier");
@@ -75,7 +72,6 @@ public class SupplierService {
     ));
   }
 
-  // Delete Supplier
   public void deleteSupplier(Long id) {
     SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
         .withProcedureName("delete_supplier");

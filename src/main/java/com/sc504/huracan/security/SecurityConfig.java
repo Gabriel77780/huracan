@@ -1,22 +1,18 @@
 package com.sc504.huracan.security;
 
+import java.util.Map;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -33,22 +29,26 @@ public class SecurityConfig {
     return new BCryptPasswordEncoder();
   }
 
-  
-  
-  
   @Bean
   public UserDetailsService userDetailsService() {
     return username -> {
-      String query = "SELECT username, password, role FROM users WHERE username = ?";
-      return jdbcTemplate.queryForObject(query, (rs, rowNum) -> {
-        String password = rs.getString("password");
-        String role = rs.getString("role");
-        return User
-            .withUsername(username)
-            .password(passwordEncoder().encode(password))
-            .roles(role)
-            .build();
-      }, username);
+
+      SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+          .withProcedureName("get_user_details");
+
+      Map<String, Object> result = jdbcCall.execute(Map.of("P_USERNAME", username));
+
+      String password = (String) result.get("P_PASSWORD");
+      String role = (String) result.get("P_ROLE");
+
+      if (password == null || role == null) {
+        throw new UsernameNotFoundException("User not found: " + username);
+      }
+
+      return User.withUsername(username)
+          .password(passwordEncoder().encode(password))
+          .roles(role)
+          .build();
     };
   }
 
