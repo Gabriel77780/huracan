@@ -49,7 +49,7 @@ public class ProductService {
 
   public Product getProductById(Long id) {
     SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
-        .withProcedureName("get_product_by_id")
+        .withProcedureName("get_product_by_id_sp")
         .declareParameters(
             new SqlParameter("p_id", Types.NUMERIC),
             new SqlOutParameter("p_name", Types.VARCHAR),

@@ -24,7 +24,7 @@ FROM product
 END;
 /
 
-CREATE OR REPLACE PROCEDURE get_product_by_id(
+CREATE OR REPLACE PROCEDURE get_product_by_id_sp(
     p_id            IN NUMBER,
     p_name          OUT VARCHAR2,
     p_description   OUT VARCHAR2,
