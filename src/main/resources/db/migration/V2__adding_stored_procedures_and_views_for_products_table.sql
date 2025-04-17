@@ -48,7 +48,8 @@ EXCEPTION
         p_category := NULL;
         p_created_at := NULL;
 WHEN OTHERS THEN
-        RAISE;
+        ROLLBACK;
+        RAISE_APPLICATION_ERROR(-20004, 'An unexpected error occurred: ' || SQLERRM);
 END;
 /
 

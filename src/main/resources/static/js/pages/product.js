@@ -111,7 +111,7 @@ function loadProducts() {
           <td>${product.name}</td>
           <td>${product.price.toFixed(2)}</td>
           <td>${product.stock}</td>
-          <td><button class="btn btn-warning btn-sm" onclick="editProduct(${product.id})">Actualizar</button></td>
+          <td><button class="btn btn-primary btn-sm" onclick="editProduct(${product.id})">Actualizar</button></td>
           <td><button class="btn btn-danger btn-sm" onclick="deleteProduct(${product.id})">Eliminar</button></td>
         `;
       tableBody.appendChild(row);

@@ -9,10 +9,8 @@ document.getElementById('customerForm').addEventListener('submit', function(even
   const productData = {
     id: productId ? formData.get('id') : null,
     name: formData.get('name'),
-    description: formData.get('description'),
-    price: parseFloat(formData.get('price')),
-    stock: parseInt(formData.get('stock')),
-    category: formData.get('category')
+    email: formData.get('email'),
+    phone: parseFloat(formData.get('phone'))
   };
 
   fetch('/customer', {
@@ -30,7 +28,7 @@ document.getElementById('customerForm').addEventListener('submit', function(even
         icon: "success",
       });
       loadCustomer();
-      hideProductFormContainer();
+      hideCustomerFormContainer();
     }
   })
   .catch(error => console.error("Error creating or updating customer:", error));
@@ -38,28 +36,29 @@ document.getElementById('customerForm').addEventListener('submit', function(even
 });
 
 
-function editProduct(id) {
+function editCustomer(id) {
 
-  showProductFormContainer();
+  showCustomerFormContainer();
 
   fetch(`/customer/${id}`)
   .then(response => response.json())
-  .then(product => {
-    document.getElementById("id").value = product.id;
-    document.getElementById("name").value = product.name;
-    document.getElementById("description").value = product.description;
-    document.getElementById("price").value = product.price;
-    document.getElementById("stock").value = product.stock;
-    document.getElementById("category").value = product.category;
+  .then(customer => {
+
+    console.log(customer)
+
+    document.getElementById("id").value = customer.id;
+    document.getElementById("name").value = customer.name;
+    document.getElementById("email").value = customer.email;
+    document.getElementById("phone").value = customer.phone;
   })
   .catch(error => console.error("Error loading customer:", error));
 }
 
-function deleteProduct(id) {
+function deleteCustomer(id) {
 
   swal({
-    title: "Está seguro de que desea borrar el producto?",
-    text: "Una vez eliminado, no podrá recuperar este producto!",
+    title: "Está seguro de que desea borrar el cliente?",
+    text: "Una vez eliminado, no podrá recuperar este cliente!",
     icon: "warning",
     buttons: true,
     dangerMode: true,
@@ -98,7 +97,7 @@ function loadCustomer() {
   fetch("/customer/all")
   .then(response => response.json())
   .then(customers => {
-    const tableBody = document.getElementById("productTableBody");
+    const tableBody = document.getElementById("customerTableBody");
     tableBody.innerHTML = "";
 
     customers.forEach(customer => {
@@ -106,8 +105,8 @@ function loadCustomer() {
       row.innerHTML = `
           <td>${customer.name}</td>
           <td>${customer.email}</td>
-          <td><button class="btn btn-warning btn-sm" onclick="editProduct(${customer.id})">Actualizar</button></td>
-          <td><button class="btn btn-danger btn-sm" onclick="deleteProduct(${customer.id})">Eliminar</button></td>
+          <td><button class="btn btn-primary btn-sm" onclick="editCustomer(${customer.id})">Actualizar</button></td>
+          <td><button class="btn btn-danger btn-sm" onclick="deleteCustomer(${customer.id})">Eliminar</button></td>
         `;
       tableBody.appendChild(row);
     });
@@ -116,15 +115,15 @@ function loadCustomer() {
   .catch(error => console.error("Error loading customers:", error));
 }
 
-function hideProductFormContainer() {
-  const form = document.getElementById('productFormContainer');
+function hideCustomerFormContainer() {
+  const form = document.getElementById('customerFormContainer');
   form.style.display = 'none';
 }
 
-function showProductFormContainer() {
-  const form = document.getElementById('productFormContainer');
+function showCustomerFormContainer() {
+  const form = document.getElementById('customerFormContainer');
   form.style.display = 'block';
 }
 
-hideProductFormContainer();
+hideCustomerFormContainer();
 loadCustomer();

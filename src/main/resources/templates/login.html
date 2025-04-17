@@ -9,22 +9,25 @@
 <body>
 <div class="container-fluid">
   <div class="row vh-100">
-    <div class="col-lg-6 d-flex justify-content-center align-items-center" style="background-color: #6861CE; color: white;">
+    <div class="col-lg-6 d-flex justify-content-center align-items-center" style="background-color: #464649; color: white;">
 
-        <h2>Some Text in the Center</h2>
+       <img th:src="@{/images/login-image.png}"
+            alt="Logo" class="img-fluid"
+            style="max-height: 100%; width: auto;">
 
     </div>
 
     <div class="col-lg-6 d-flex justify-content-center align-items-center">
-      <div class="card p-4 shadow w-100">
-        <h2 class="text-center">Login</h2>
+      <div class="card p-4 shadow w-100" style="margin: 50px 100px;">
+        <h2 class="text-center">Ciclo Huracán</h2>
+        <h3 class="text-center">Ingreso</h3>
         <form th:action="@{/perform_login}" method="post">
           <div class="mb-3">
-            <label class="form-label">Username</label>
+            <label class="form-label">Correo Electrónico</label>
             <input type="text" name="username" class="form-control" required>
           </div>
           <div class="mb-3">
-            <label class="form-label">Password</label>
+            <label class="form-label">Contraseña</label>
             <input type="password" name="password" class="form-control" required>
           </div>
           <button type="submit" class="btn btn-primary w-100">Login</button>

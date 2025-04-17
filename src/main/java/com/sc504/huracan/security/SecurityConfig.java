@@ -56,10 +56,11 @@ public class SecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
    http
        .authorizeHttpRequests((authorizeRequests) -> authorizeRequests
-           .requestMatchers((request) -> request.getServletPath().equals("/login"))
-           .permitAll()
-           .anyRequest()
-           .authenticated()).userDetailsService(userDetailsService())
+           .requestMatchers("/login").permitAll()
+           .requestMatchers("/images/**", "/css/**", "/js/**", "/favicon.ico").permitAll()
+           .anyRequest().authenticated()
+       )
+       .userDetailsService(userDetailsService())
     .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
         .loginPage("/login")
             .loginProcessingUrl("/perform_login")

@@ -1,11 +1,14 @@
 package com.sc504.huracan.service;
 
 import com.sc504.huracan.model.Customer;
+import com.sc504.huracan.model.Product;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.List;
 import java.util.Map;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Service;
@@ -39,10 +42,10 @@ public class CustomerService {
         .withProcedureName("get_customer_by_id_sp")
         .declareParameters(
             new SqlParameter("p_id", Types.NUMERIC),
-            new SqlParameter("p_name", Types.VARCHAR),
-            new SqlParameter("p_email", Types.VARCHAR),
-            new SqlParameter("p_phone", Types.VARCHAR),
-            new SqlParameter("p_created_at", Types.TIMESTAMP)
+            new SqlOutParameter("p_name", Types.VARCHAR),
+            new SqlOutParameter("p_email", Types.VARCHAR),
+            new SqlOutParameter("p_phone", Types.VARCHAR),
+            new SqlOutParameter("p_created_at", Types.TIMESTAMP)
         );
 
     Map<String, Object> result = jdbcCall.execute(Map.of("p_id", id));
@@ -85,17 +88,19 @@ public class CustomerService {
   public List<Customer> getAllCustomers() {
     SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
         .withProcedureName("get_all_customer_sp")
-        .declareParameters(
-            new SqlParameter("p_id", Types.NUMERIC),
-            new SqlParameter("p_name", Types.VARCHAR),
-            new SqlParameter("p_email", Types.VARCHAR),
-            new SqlParameter("p_phone", Types.VARCHAR),
-            new SqlParameter("p_created_at", Types.TIMESTAMP)
-        );
+        .returningResultSet("p_customer_cursor",
+            (RowMapper<Customer>) (rs, rowNum) -> new Customer(
+                rs.getLong("id"),
+                rs.getString("name"),
+                rs.getString("email"),
+                rs.getString("phone"),
+                null
+            ));
 
     Map<String, Object> result = jdbcCall.execute(Map.of());
 
-    return (List<Customer>) result.get("customers");
+    return result.get("p_customer_cursor")!= null ?
+        (List<Customer>) result.get("p_customer_cursor") : List.of();
   }
 
 }
