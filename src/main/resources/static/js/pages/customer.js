@@ -24,11 +24,25 @@ document.getElementById('customerForm').addEventListener('submit', function(even
   .then(response => response.json())
   .then(data => {
     if(data.success){
-      swal(data.message, {
+
+      Swal.fire({
         icon: "success",
+        text: data.message,
+        confirmButtonText: "Aceptar",
+        confirmButtonColor: "black",
       });
+
       loadCustomer();
       hideCustomerFormContainer();
+    } else {
+
+      Swal.fire({
+        icon: "error",
+        text: data.message,
+        confirmButtonText: "Aceptar",
+        confirmButtonColor: "black",
+      });
+
     }
   })
   .catch(error => console.error("Error creating or updating customer:", error));
@@ -53,15 +67,18 @@ function editCustomer(id) {
 
 function deleteCustomer(id) {
 
-  swal({
+  Swal.fire({
     title: "Está seguro de que desea borrar el cliente?",
     text: "Una vez eliminado, no podrá recuperar este cliente!",
     icon: "warning",
-    buttons: true,
-    dangerMode: true,
+    showCancelButton: true,
+    confirmButtonColor: "black",
+    cancelButtonColor: "black",
+    confirmButtonText: "Aceptar",
+    cancelButtonText: "Cancelar",
   })
-  .then((willDelete) => {
-    if (willDelete) {
+  .then((result) => {
+    if (result.isConfirmed) {
 
       fetch(`/customer/${id}`, {
         method: 'DELETE',
@@ -75,11 +92,21 @@ function deleteCustomer(id) {
 
         if(data.success) {
 
-          swal(data.message, {
+          Swal.fire({
             icon: "success",
+            text: data.message,
+            confirmButtonText: "Aceptar",
+            confirmButtonColor: "black",
           });
 
           loadCustomer();
+        } else {
+          Swal.fire({
+            icon: "error",
+            text: data.message,
+            confirmButtonText: "Aceptar",
+            confirmButtonColor: "black",
+          });
         }
 
       })

@@ -104,7 +104,7 @@ function renderPurchaseProductsTable() {
       <td>${item.quantity}</td>
       <td>${(item.price * item.quantity).toFixed(2)}</td>
       <td class="text-center">
-        <button class="btn btn-danger btn-sm" onclick="removeItem(${index})">
+        <button class="btn btn-dark btn-sm" onclick="removePurchaseProduct(${index})">
           ️<i class="fas fa-trash"></i>
         </button>
       </td>
@@ -113,19 +113,17 @@ function renderPurchaseProductsTable() {
       tbody.appendChild(row);
     });
 
-
   } else {
 
     shoppingCar = [];
 
   }
 
-
 }
 
 function addProductPurchaseToShoppingCar(product) {
 
-  swal("Ingrese la cantidad que desea:", {
+  Swal.fire("Ingrese la cantidad que desea:", {
     content: "input",
   })
   .then((quantity) => {
@@ -179,13 +177,28 @@ function executePurchase() {
   }).then(response => response.json())
   .then(data => {
     if(data.success){
-      swal(data.message, {
+      Swal.fire({
         icon: "success",
+        text: data.message,
+        confirmButtonText: "Aceptar",
+        confirmButtonColor: "black",
       });
       shoppingCar = [];
+    } else {
+      Swal.fire({
+        icon: "error",
+        text: data.message,
+        confirmButtonText: "Aceptar",
+        confirmButtonColor: "black",
+      });
     }
   })
   .catch(error => console.error("Error creating or updating supplier:", error));
+}
+
+function removePurchaseProduct(index) {
+  shoppingCar.splice(index, 1);
+  renderPurchaseProductsTable();
 }
 
 loadSuppliers();

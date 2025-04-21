@@ -26,11 +26,25 @@ document.getElementById('productForm').addEventListener('submit', function(event
   .then(response => response.json())
   .then(data => {
     if(data.success){
-      swal(data.message, {
+
+      Swal.fire({
         icon: "success",
+        text: data.message,
+        confirmButtonText: "Aceptar",
+        confirmButtonColor: "black",
       });
+
       loadProducts();
       hideProductFormContainer();
+    } else {
+
+      Swal.fire({
+        icon: "error",
+        text: data.message,
+        confirmButtonText: "Aceptar",
+        confirmButtonColor: "black",
+      });
+
     }
   })
   .catch(error => {
@@ -59,15 +73,18 @@ function editProduct(id) {
 
 function deleteProduct(id) {
 
-  swal({
+  Swal.fire({
     title: "Está seguro de que desea borrar el producto?",
     text: "Una vez eliminado, no podrá recuperar este producto!",
     icon: "warning",
-    buttons: true,
-    dangerMode: true,
+    showCancelButton: true,
+    confirmButtonColor: "black",
+    cancelButtonColor: "black",
+    confirmButtonText: "Aceptar",
+    cancelButtonText: "Cancelar",
   })
-  .then((willDelete) => {
-    if (willDelete) {
+  .then((result) => {
+    if (result.isConfirmed) {
 
       fetch(`/product/${id}`, {
         method: 'DELETE',
@@ -81,11 +98,21 @@ function deleteProduct(id) {
 
         if(data.success) {
 
-          swal(data.message, {
+          Swal.fire({
             icon: "success",
+            text: data.message,
+            confirmButtonText: "Aceptar",
+            confirmButtonColor: "black",
           });
 
           loadProducts();
+        } else {
+          Swal.fire({
+            icon: "error",
+            text: data.message,
+            confirmButtonText: "Aceptar",
+            confirmButtonColor: "black",
+          });
         }
 
       })

@@ -24,11 +24,21 @@ document.getElementById('suppliersForm').addEventListener('submit', function(eve
   .then(response => response.json())
   .then(data => {
     if(data.success){
-      swal(data.message, {
+      Swal.fire({
         icon: "success",
+        text: data.message,
+        confirmButtonText: "Aceptar",
+        confirmButtonColor: "black",
       });
       loadSupplier();
       hideSuppliersFormContainer();
+    } else {
+      Swal.fire({
+        icon: "error",
+        text: data.message,
+        confirmButtonText: "Aceptar",
+        confirmButtonColor: "black",
+      });
     }
   })
   .catch(error => console.error("Error creating or updating supplier:", error));
@@ -53,15 +63,18 @@ function editSupplier(id) {
 
 function deleteSupplier(id) {
 
-  swal({
+  Swal.fire({
     title: "Está seguro de que desea borrar el proveedor?",
     text: "Una vez eliminado, no podrá recuperar este proveedor!",
     icon: "warning",
-    buttons: true,
-    dangerMode: true,
+    showCancelButton: true,
+    confirmButtonColor: "black",
+    cancelButtonColor: "black",
+    confirmButtonText: "Borrar",
+    cancelButtonText: "Cancelar",
   })
-  .then((willDelete) => {
-    if (willDelete) {
+  .then((result) => {
+    if (result.isConfirmed) {
 
       fetch(`/supplier/${id}`, {
         method: 'DELETE',
@@ -75,11 +88,23 @@ function deleteSupplier(id) {
 
         if(data.success) {
 
-          swal(data.message, {
+          Swal.fire({
             icon: "success",
+            text: data.message,
+            confirmButtonText: "Aceptar",
+            confirmButtonColor: "black",
           });
 
           loadSupplier();
+        } else {
+
+          Swal.fire({
+            icon: "error",
+            text: data.message,
+            confirmButtonText: "Aceptar",
+            confirmButtonColor: "black",
+          });
+
         }
 
       })

@@ -23,22 +23,38 @@
         <h3 class="text-center">Ingreso</h3>
         <form th:action="@{/perform_login}" method="post">
           <div class="mb-3">
-            <label class="form-label">Correo Electrónico</label>
-            <input
-                type="text" name="username" class="form-control" required>
+            <label for="username" class="form-label">Correo Electrónico</label>
+            <input id = "username" type="text" name="username" class="form-control" required>
           </div>
           <div class="mb-3">
-            <label class="form-label">Contraseña</label>
-            <input type="password" name="password" class="form-control" required>
+            <label for="password" class="form-label">Contraseña</label>
+            <input id = "password" type="password" name="password" class="form-control" required>
           </div>
-          <button type="submit" class="btn btn-dark w-100">Login</button>
+          <button type="submit" class="btn btn-dark w-100">Ingresar</button>
         </form>
       </div>
     </div>
   </div>
 </div>
 
+<script th:src="@{/js/plugin/sweetalert2/sweetalert2.min.js}"></script>
 <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js}"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('error') === 'true') {
+
+      Swal.fire({
+        icon: "error",
+        title: "Error de autenticación",
+        text: "Usuario o contraseña incorrectos.",
+        confirmButtonText: "Intentar de nuevo",
+        confirmButtonColor: "black",
+      });
+
+    }
+  });
+</script>
 </body>
 </html>
 

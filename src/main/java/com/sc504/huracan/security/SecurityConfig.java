@@ -65,9 +65,14 @@ public class SecurityConfig {
         .loginPage("/login")
             .loginProcessingUrl("/perform_login")
             .defaultSuccessUrl("/home", true)
-            .failureUrl("/login.html?error=true")
+            .failureUrl("/login?error=true")
         .permitAll())
-       ;
+       .logout(logout -> logout
+           .logoutUrl("/logout")
+           .logoutSuccessUrl("/login.html?logout=true")
+           .invalidateHttpSession(true)
+           .deleteCookies("JSESSIONID")
+       );
     return http.build();
   }
 
