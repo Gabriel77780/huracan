@@ -1,30 +1,30 @@
-if (typeof customerId === 'undefined') {
-  let customerId = 0;
+if (typeof supplierId === 'undefined') {
+  let supplierId = 0;
 }
 
 if (typeof shoppingCar !== 'undefined') {
   shoppingCar = [];
 }
 
-function loadCustomer() {
-  fetch("/customer/all")
+function loadSuppliers() {
+  fetch("/supplier/all")
   .then(response => response.json())
-  .then(customers => {
-    const tableBody = document.getElementById("customerTableBody");
+  .then(suppliers => {
+    const tableBody = document.getElementById("supplierTableBody");
     tableBody.innerHTML = "";
 
-    customers.forEach(customer => {
+    suppliers.forEach(supplier => {
       const row = document.createElement("tr");
       row.innerHTML = `
-          <td>${customer.name}</td>
-          <td>${customer.email}</td>
-          <td class="text-center"><button class="btn btn-dark btn-sm" onclick="startSale(${customer.id})"><i class="fas fa-cart-plus"></i></button></td>
+          <td>${supplier.name}</td>
+          <td>${supplier.email}</td>
+          <td class="text-center"><button class="btn btn-dark btn-sm" onclick="startPurchase(${supplier.id})"><i class="fas fa-cart-plus"></i></button></td>
         `;
       tableBody.appendChild(row);
     });
 
   })
-  .catch(error => console.error("Error loading customers:", error));
+  .catch(error => console.error("Error loading suppliers:", error));
 }
 
 function loadProducts() {
@@ -40,7 +40,7 @@ function loadProducts() {
           <td>${product.name}</td>
           <td>${product.price.toFixed(2)}</td>
           <td>${product.stock}</td>
-          <td class="text-center"><button class="btn btn-dark btn-sm" onclick='addProductSaleToShoppingCar(${JSON.stringify(product)})'><i class="fas fa-cart-plus"></i></button></td>
+          <td class="text-center"><button class="btn btn-dark btn-sm" onclick='addProductPurchaseToShoppingCar(${JSON.stringify(product)})'><i class="fas fa-cart-plus"></i></button></td>
         `;
       tableBody.appendChild(row);
     });
@@ -59,37 +59,37 @@ function hideProductTableContainer() {
   productTableContainer.style.display = "none";
 }
 
-function hideCustomerTableContainer() {
-  const customerTableContainer = document.getElementById("customerTableContainer");
-  customerTableContainer.style.display = "none";
+function hideSupplierTableContainer() {
+  const supplierTableContainer = document.getElementById("supplierTableContainer");
+  supplierTableContainer.style.display = "none";
 }
 
-function showClientSaleProductsTableContainer() {
-  const clientSaleProductsTableContainer = document.getElementById("clientSaleProductsTableContainer");
-  clientSaleProductsTableContainer.style.display = "block";
+function showSupplierPurchaseProductsTableContainer() {
+  const supplierPurchaseProductsTableContainer = document.getElementById("supplierPurchaseProductsTableContainer");
+  supplierPurchaseProductsTableContainer.style.display = "block";
 }
 
-function hideClientSaleProductsTableContainer() {
-  const clientSaleProductsTableContainer = document.getElementById("clientSaleProductsTableContainer");
-  clientSaleProductsTableContainer.style.display = "none";
+function hideSupplierPurchaseProductsTableContainer() {
+  const supplierPurchaseProductsTableContainer = document.getElementById("supplierPurchaseProductsTableContainer");
+  supplierPurchaseProductsTableContainer.style.display = "none";
 }
 
-function startSale(selectedCustomerId) {
-  const customerTableContainer = document.getElementById("customerTableContainer");
-  customerTableContainer.style.display = "none";
+function startPurchase(selectedSupplierId) {
+  const supplierTableContainer = document.getElementById("supplierTableContainer");
+  supplierTableContainer.style.display = "none";
 
-  const clientSaleProductsTableContainer =
-      document.getElementById("clientSaleProductsTableContainer");
-  clientSaleProductsTableContainer.style.display = "block";
+  const supplierPurchaseProductsTableContainer =
+      document.getElementById("supplierPurchaseProductsTableContainer");
+  supplierPurchaseProductsTableContainer.style.display = "block";
 
-  customerId = selectedCustomerId;
+  supplierId = selectedSupplierId;
 
-  renderSaleProductsTable();
+  renderPurchaseProductsTable();
 }
 
-function renderSaleProductsTable() {
+function renderPurchaseProductsTable() {
   const tbody =
-      document.getElementById('clientSaleProductsTableBody');
+      document.getElementById('supplierPurchaseProductsTableBody');
 
   if (typeof shoppingCar !== 'undefined') {
 
@@ -123,15 +123,15 @@ function renderSaleProductsTable() {
 
 }
 
-function addProductSaleToShoppingCar(product) {
+function addProductPurchaseToShoppingCar(product) {
 
   swal("Ingrese la cantidad que desea:", {
     content: "input",
   })
   .then((quantity) => {
-    const customerTableContainer = document.getElementById(
-        "customerTableContainer");
-    customerTableContainer.style.display = "none";
+    const supplierTableContainer = document.getElementById(
+        "supplierTableContainer");
+    supplierTableContainer.style.display = "none";
 
     const productTableContainer = document.getElementById(
         "productTableContainer");
@@ -148,28 +148,28 @@ function addProductSaleToShoppingCar(product) {
       quantity: quantity
     });
 
-    renderSaleProductsTable();
+    renderPurchaseProductsTable();
 
   });
 }
 
-function executeSale() {
+function executePurchase() {
 
-  if (!customerId || shoppingCar.length === 0) {
-    alert("Debe seleccionar un cliente y agregar productos.");
+  if (!supplierId || shoppingCar.length === 0) {
+    alert("Debe seleccionar un proveedor y agregar productos.");
     return;
   }
 
   const payload = {
-    customerId: customerId,
-    saleDetailDTOS: shoppingCar.map(item => ({
+    supplierId: supplierId,
+    purchaseDetailDTOS: shoppingCar.map(item => ({
       productId: item.productId,
       quantity: parseInt(item.quantity),
       price: item.price
     }))
   };
 
-  fetch("/sale", {
+  fetch("/purchase", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -185,9 +185,9 @@ function executeSale() {
       shoppingCar = [];
     }
   })
-  .catch(error => console.error("Error creating or updating customer:", error));
+  .catch(error => console.error("Error creating or updating supplier:", error));
 }
 
-loadCustomer();
+loadSuppliers();
 loadProducts();
 

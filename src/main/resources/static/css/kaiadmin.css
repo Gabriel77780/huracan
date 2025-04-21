@@ -515,7 +515,7 @@ body {
           padding: 12px 22px;
           font-weight: 600; }
           .page-with-aside .page-aside .aside-nav .nav > li.active > a {
-            color: #575962 !important; }
+            color: #6861ce !important; }
         .page-with-aside .page-aside .aside-nav .nav > li > a {
           color: #83848a;
           display: flex;
@@ -661,7 +661,7 @@ body {
         .sidebar .nav > .nav-item a:hover, .sidebar .nav > .nav-item a:focus, .sidebar[data-background-color="white"] .nav > .nav-item a:hover, .sidebar[data-background-color="white"] .nav > .nav-item a:focus {
           text-decoration: none; }
           .sidebar .nav > .nav-item a:hover p, .sidebar .nav > .nav-item a:focus p, .sidebar[data-background-color="white"] .nav > .nav-item a:hover p, .sidebar[data-background-color="white"] .nav > .nav-item a:focus p {
-            color: #575962 !important;
+            color: #6861ce !important;
             font-weight: 600; }
           .sidebar .nav > .nav-item a:hover i, .sidebar .nav > .nav-item a:focus i, .sidebar[data-background-color="white"] .nav > .nav-item a:hover i, .sidebar[data-background-color="white"] .nav > .nav-item a:focus i {
             color: #4d7cfe !important; }
@@ -922,13 +922,13 @@ body {
   .sidebar.sidebar-style-2 .nav .nav-item a:hover, .sidebar.sidebar-style-2 .nav .nav-item a:focus, .sidebar.sidebar-style-2 .nav .nav-item a[data-toggle=collapse][aria-expanded=true] {
     background: rgba(199, 199, 199, 0.2); }
     .sidebar.sidebar-style-2 .nav .nav-item a:hover p, .sidebar.sidebar-style-2 .nav .nav-item a:hover i, .sidebar.sidebar-style-2 .nav .nav-item a:focus p, .sidebar.sidebar-style-2 .nav .nav-item a:focus i, .sidebar.sidebar-style-2 .nav .nav-item a[data-toggle=collapse][aria-expanded=true] p, .sidebar.sidebar-style-2 .nav .nav-item a[data-toggle=collapse][aria-expanded=true] i {
-      color: #575962 !important; }
+      color: #6861ce !important; }
   .sidebar.sidebar-style-2 .nav .nav-item.active a:before {
     background: transparent; }
   .sidebar.sidebar-style-2 .nav .nav-item .active a {
     background: rgba(199, 199, 199, 0.2); }
     .sidebar.sidebar-style-2 .nav .nav-item .active a p, .sidebar.sidebar-style-2 .nav .nav-item .active a i {
-      color: #575962 !important; }
+      color: #6861ce !important; }
   .sidebar.sidebar-style-2 .nav .nav-item.submenu {
     background: transparent !important; }
   .sidebar.sidebar-style-2 .nav .nav-item a[data-toggle=collapse][aria-expanded=true]:before {

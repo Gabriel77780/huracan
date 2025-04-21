@@ -1,5 +1,7 @@
 package com.sc504.huracan.dto;
 
-public record PurchaseRequestDTO() {
+import java.util.List;
+
+public record PurchaseRequestDTO(Long supplierId, List<PurchaseDetailDTO> purchaseDetailDTOS)  {
 
 }

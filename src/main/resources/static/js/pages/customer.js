@@ -102,8 +102,8 @@ function loadCustomer() {
       row.innerHTML = `
           <td>${customer.name}</td>
           <td>${customer.email}</td>
-          <td class="text-center"><button class="btn btn-primary btn-sm" onclick="editCustomer(${customer.id})"><i class="fas fa-list"></i></button></td>
-          <td class="text-center"><button class="btn btn-danger btn-sm" onclick="deleteCustomer(${customer.id})"><i class="fas fa-trash"></i></button></td>
+          <td class="text-center"><button class="btn btn-dark btn-sm" onclick="editCustomer(${customer.id})"><i class="fas fa-list"></i></button></td>
+          <td class="text-center"><button class="btn btn-dark btn-sm" onclick="deleteCustomer(${customer.id})"><i class="fas fa-trash"></i></button></td>
         `;
       tableBody.appendChild(row);
     });

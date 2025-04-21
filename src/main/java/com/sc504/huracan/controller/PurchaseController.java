@@ -3,9 +3,7 @@ package com.sc504.huracan.controller;
 
 import com.sc504.huracan.api.ApiResponseDTO;
 import com.sc504.huracan.dto.PurchaseRequestDTO;
-import com.sc504.huracan.dto.SaleRequestDTO;
 import com.sc504.huracan.service.PurchaseService;
-import com.sc504.huracan.service.SaleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

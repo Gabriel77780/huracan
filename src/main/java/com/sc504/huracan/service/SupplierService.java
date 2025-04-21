@@ -1,6 +1,5 @@
 package com.sc504.huracan.service;
 
-import com.sc504.huracan.model.Customer;
 import com.sc504.huracan.model.Supplier;
 import java.sql.Timestamp;
 import java.sql.Types;
@@ -24,7 +23,8 @@ public class SupplierService {
 
   public void createSupplier(Supplier supplier) {
     SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
-        .withProcedureName("create_supplier_sp");
+        .withProcedureName("create_supplier_sp")
+        .withCatalogName("supplier_pkg");
 
     jdbcCall.addDeclaredParameter(new SqlParameter("p_name", Types.VARCHAR));
     jdbcCall.addDeclaredParameter(new SqlParameter("p_phone", Types.VARCHAR));
@@ -40,6 +40,7 @@ public class SupplierService {
   public Supplier getSupplierById(Long id) {
     SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
         .withProcedureName("get_supplier_by_id_sp")
+        .withCatalogName("supplier_pkg")
         .declareParameters(
             new SqlParameter("p_id", Types.NUMERIC),
             new SqlOutParameter("p_name", Types.VARCHAR),
@@ -61,7 +62,8 @@ public class SupplierService {
 
   public void updateSupplier(Supplier supplier) {
     SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
-        .withProcedureName("update_supplier_sp");
+        .withProcedureName("update_supplier_sp")
+        .withCatalogName("supplier_pkg");
 
     jdbcCall.addDeclaredParameter(new SqlParameter("p_id", Types.NUMERIC));
     jdbcCall.addDeclaredParameter(new SqlParameter("p_name", Types.VARCHAR));
@@ -78,7 +80,8 @@ public class SupplierService {
 
   public boolean deleteSupplier(Long id) {
     SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
-        .withProcedureName("delete_supplier_sp");
+        .withProcedureName("delete_supplier_sp")
+        .withCatalogName("supplier_pkg");
 
     jdbcCall.execute(Map.of("p_id", id));
 
@@ -88,6 +91,7 @@ public class SupplierService {
   public List<Supplier> getAllSuppliers() {
     SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
         .withProcedureName("get_all_supplier_sp")
+        .withCatalogName("supplier_pkg")
         .returningResultSet("p_supplier_cursor",
             (RowMapper<Supplier>) (rs, rowNum) -> new Supplier(
                 rs.getLong("id"),
@@ -99,7 +103,7 @@ public class SupplierService {
 
     Map<String, Object> result = jdbcCall.execute(Map.of());
 
-    return result.get("p_supplier_cursor")!= null ?
+    return result.get("p_supplier_cursor") != null ?
         (List<Supplier>) result.get("p_supplier_cursor") : List.of();
   }
 }

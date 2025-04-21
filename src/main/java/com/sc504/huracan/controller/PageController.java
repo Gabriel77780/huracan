@@ -11,11 +11,6 @@ public class PageController {
     return "home :: content";
   }
 
-  @GetMapping("/aboutFragment")
-  public String getAboutFragment() {
-    return "about :: content";
-  }
-
   @GetMapping("/readmeFragment")
   public String getReadmeFragment() {
     return "readme :: content";
@@ -37,13 +32,12 @@ public class PageController {
   }
 
   @GetMapping("/saleFragment")
-  public String getClientSaleFragment() {
-    return "sale :: content";
-  }
+  public String getClientSaleFragment() { return "sale :: content"; }
 
   @GetMapping("/supplierFragment")
-  public String getSupplierFragment() {
-    return "supplier :: content";
-  }
+  public String getSupplierFragment() { return "supplier :: content"; }
+
+  @GetMapping("/purchaseFragment")
+  public String getPurchaseFragment() { return "purchase :: content"; }
 
 }

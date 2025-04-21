@@ -54,8 +54,8 @@ function editSupplier(id) {
 function deleteSupplier(id) {
 
   swal({
-    title: "Está seguro de que desea borrar el cliente?",
-    text: "Una vez eliminado, no podrá recuperar este cliente!",
+    title: "Está seguro de que desea borrar el proveedor?",
+    text: "Una vez eliminado, no podrá recuperar este proveedor!",
     icon: "warning",
     buttons: true,
     dangerMode: true,
@@ -102,8 +102,8 @@ function loadSupplier() {
       row.innerHTML = `
           <td>${supplier.name}</td>
           <td>${supplier.email}</td>
-          <td class="text-center"><button class="btn btn-primary btn-sm" onclick="editSupplier(${supplier.id})"><i class="fas fa-list"></i></button></td>
-          <td class="text-center"><button class="btn btn-danger btn-sm" onclick="deleteSupplier(${supplier.id})"><i class="fas fa-trash"></i></button></td>
+          <td class="text-center"><button class="btn btn-dark btn-sm" onclick="editSupplier(${supplier.id})"><i class="fas fa-list"></i></button></td>
+          <td class="text-center"><button class="btn btn-dark btn-sm" onclick="deleteSupplier(${supplier.id})"><i class="fas fa-trash"></i></button></td>
         `;
       tableBody.appendChild(row);
     });

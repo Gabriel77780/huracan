@@ -36,19 +36,19 @@ public class CustomerController {
   }
 
   @GetMapping("/{id}")
-  public Customer getProduct(@PathVariable Long id) {
+  public Customer getCustomer(@PathVariable Long id) {
     return customerService.getCustomerById(id);
   }
 
   @PutMapping
-  public ResponseEntity<ApiResponseDTO> updateProduct(@RequestBody Customer customer) {
+  public ResponseEntity<ApiResponseDTO> updateCustomer(@RequestBody Customer customer) {
     customerService.updateCustomer(customer);
     return ResponseEntity.ok(new ApiResponseDTO(true, HttpStatus.OK.value(),
         "Cliente actualizado correctamente"));
   }
 
   @DeleteMapping("/{id}")
-  public ResponseEntity<ApiResponseDTO> deleteProduct(@PathVariable Long id) {
+  public ResponseEntity<ApiResponseDTO> deleteCustomer(@PathVariable Long id) {
 
     boolean success = customerService.deleteCustomer(id);
 
@@ -62,7 +62,7 @@ public class CustomerController {
   }
 
   @GetMapping("/all")
-  public List<Customer> getAllProducts() {
+  public List<Customer> getAllCustomers() {
     return customerService.getAllCustomers();
   }
 
