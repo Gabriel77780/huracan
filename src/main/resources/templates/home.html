@@ -46,6 +46,9 @@
                   <a href="#" id="supplierFragment">
                     <span class="sub-item">Proveedores</span>
                   </a>
+                  <a href="#" id="systemUserFragment">
+                    <span class="sub-item">Usuarios del Sistema</span>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -200,6 +203,11 @@
     $('#purchaseFragment').click(function(e) {
       e.preventDefault();
       loadFragment('/purchaseFragment');
+    });
+
+    $('#systemUserFragment').click(function(e) {
+      e.preventDefault();
+      loadFragment('/systemUserFragment');
     });
 
   });

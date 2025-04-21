@@ -123,10 +123,17 @@ function renderPurchaseProductsTable() {
 
 function addProductPurchaseToShoppingCar(product) {
 
-  Swal.fire("Ingrese la cantidad que desea:", {
-    content: "input",
+  Swal.fire({
+    title: 'Ingrese la cantidad que desea:',
+    input: 'text',
+    inputPlaceholder: 'Ingrese la cantidad que desea',
+    showCancelButton: true,
+    confirmButtonColor: "black",
+    cancelButtonColor: "black"
   })
-  .then((quantity) => {
+  .then((result) => {
+
+    if (result.isConfirmed) {
     const supplierTableContainer = document.getElementById(
         "supplierTableContainer");
     supplierTableContainer.style.display = "none";
@@ -143,10 +150,12 @@ function addProductPurchaseToShoppingCar(product) {
       productId: product.id,
       name: product.name,
       price: product.price,
-      quantity: quantity
+      quantity: result.value
     });
 
     renderPurchaseProductsTable();
+
+    }
 
   });
 }

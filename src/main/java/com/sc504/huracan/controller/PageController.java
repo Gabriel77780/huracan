@@ -40,4 +40,7 @@ public class PageController {
   @GetMapping("/purchaseFragment")
   public String getPurchaseFragment() { return "purchase :: content"; }
 
+  @GetMapping("/systemUserFragment")
+  public String getSystemUserFragment() { return "system_user :: content"; }
+
 }

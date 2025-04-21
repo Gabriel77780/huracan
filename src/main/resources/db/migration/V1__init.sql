@@ -79,6 +79,8 @@ CREATE TABLE purchase_detail (
 
 CREATE OR REPLACE VIEW system_user_view AS
 SELECT
+    id,
+    name,
     email,
     password,
     role
@@ -87,12 +89,13 @@ FROM system_user;
 
 CREATE OR REPLACE PROCEDURE get_user_details(
   p_username IN VARCHAR2,
+  p_id OUT NUMBER,
   p_password OUT VARCHAR2,
   p_role OUT VARCHAR2
 ) AS
 BEGIN
-SELECT password, role
-INTO p_password, p_role
+SELECT id, password, role
+INTO p_id, p_password, p_role
 FROM system_user_view
 WHERE email = p_username;
 EXCEPTION
@@ -100,4 +103,10 @@ EXCEPTION
       p_password := NULL;
       p_role := NULL;
 END;
-END;
+
+INSERT INTO system_user (name, email, password, role)
+VALUES ('ADMIN', 'ADMIN', 'ADMIN', 'ADMIN')
+/
+
+COMMIT
+/

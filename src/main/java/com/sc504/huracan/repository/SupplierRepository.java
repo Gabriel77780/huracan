@@ -23,8 +23,8 @@ public class SupplierRepository {
 
   public void createSupplier(Supplier supplier) {
     SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
-        .withProcedureName("create_supplier_sp")
-        .withCatalogName("supplier_pkg");
+        .withCatalogName("supplier_pkg")
+        .withProcedureName("create_supplier_sp");
 
     jdbcCall.addDeclaredParameter(new SqlParameter("p_name", Types.VARCHAR));
     jdbcCall.addDeclaredParameter(new SqlParameter("p_phone", Types.VARCHAR));
@@ -39,8 +39,8 @@ public class SupplierRepository {
 
   public Supplier getSupplierById(Long id) {
     SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
-        .withProcedureName("get_supplier_by_id_sp")
         .withCatalogName("supplier_pkg")
+        .withProcedureName("get_supplier_by_id_sp")
         .declareParameters(
             new SqlParameter("p_id", Types.NUMERIC),
             new SqlOutParameter("p_name", Types.VARCHAR),
@@ -62,8 +62,8 @@ public class SupplierRepository {
 
   public void updateSupplier(Supplier supplier) {
     SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
-        .withProcedureName("update_supplier_sp")
-        .withCatalogName("supplier_pkg");
+        .withCatalogName("supplier_pkg")
+        .withProcedureName("update_supplier_sp");
 
     jdbcCall.addDeclaredParameter(new SqlParameter("p_id", Types.NUMERIC));
     jdbcCall.addDeclaredParameter(new SqlParameter("p_name", Types.VARCHAR));
@@ -80,8 +80,8 @@ public class SupplierRepository {
 
   public boolean deleteSupplier(Long id) {
     SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
-        .withProcedureName("delete_supplier_sp")
-        .withCatalogName("supplier_pkg");
+        .withCatalogName("supplier_pkg")
+        .withProcedureName("delete_supplier_sp");
 
     jdbcCall.execute(Map.of("p_id", id));
 
@@ -90,8 +90,8 @@ public class SupplierRepository {
 
   public List<Supplier> getAllSuppliers() {
     SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
-        .withProcedureName("get_all_supplier_sp")
         .withCatalogName("supplier_pkg")
+        .withProcedureName("get_all_supplier_sp")
         .returningResultSet("p_supplier_cursor",
             (RowMapper<Supplier>) (rs, rowNum) -> new Supplier(
                 rs.getLong("id"),

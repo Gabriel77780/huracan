@@ -66,5 +66,4 @@ public class CustomerController {
     return customerService.getAllCustomers();
   }
 
-
 }

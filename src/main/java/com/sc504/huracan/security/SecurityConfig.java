@@ -1,5 +1,6 @@
 package com.sc504.huracan.security;
 
+import java.util.List;
 import java.util.Map;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -40,15 +42,16 @@ public class SecurityConfig {
 
       String password = (String) result.get("P_PASSWORD");
       String role = (String) result.get("P_ROLE");
+      Integer id = result.get("p_id") != null ? ((Integer) result.get("p_id")) : null;
 
       if (password == null || role == null) {
         throw new UsernameNotFoundException("User not found: " + username);
       }
 
-      return User.withUsername(username)
-          .password(passwordEncoder().encode(password))
-          .roles(role)
-          .build();
+      List<GrantedAuthority> authorities = List.of(() -> role);
+
+      return new SystemUserDetails(id, username,
+          passwordEncoder().encode(password), authorities);
     };
   }
 

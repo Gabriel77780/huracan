@@ -4,8 +4,12 @@ import com.sc504.huracan.dto.PurchaseDetailDTO;
 import com.sc504.huracan.dto.PurchaseRequestDTO;
 import com.sc504.huracan.dto.SaleRequestDTO;
 import com.sc504.huracan.repository.PurchaseRepository;
+import com.sc504.huracan.security.SystemUserDetails;
+import com.sc504.huracan.security.service.SecurityService;
 import java.math.BigDecimal;
 import java.util.List;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,14 +17,19 @@ public class PurchaseService {
 
   private final PurchaseRepository purchaseRepository;
 
-  public PurchaseService(PurchaseRepository purchaseRepository) {
+  private final SecurityService securityService;
+
+  public PurchaseService(PurchaseRepository purchaseRepository, SecurityService securityService) {
     this.purchaseRepository = purchaseRepository;
+    this.securityService = securityService;
   }
 
   public void executePurchase(PurchaseRequestDTO purchaseRequestDTO) {
 
+    Integer systemUserDetailsUserId = securityService.getSystemUserDetailsUserId();
+
     Long purchaseId = purchaseRepository.createPurchase(purchaseRequestDTO.supplierId(),
-        1,
+        systemUserDetailsUserId,
         calculatePurchaseTotal(purchaseRequestDTO.purchaseDetailDTOS()));
 
     for (var purchaseDetailDTO : purchaseRequestDTO.purchaseDetailDTOS()) {

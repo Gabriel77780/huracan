@@ -1,0 +1,78 @@
+<th:block th:fragment="content">
+
+  <div id="systemUserFormContainer" class="col-12 col-lg-8 col-xxl-9">
+    <div class="card flex-fill">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Usuario de Sistema</h5>
+      </div>
+
+      <div class="card-body">
+        <form id="systemUserForm">
+
+          <input type="hidden" id="id" name="id">
+
+          <div class="mb-3">
+            <label for="name" class="form-label">Nombre del Usuario</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">Correo Electrónico</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+          </div>
+
+          <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="password" name="password">
+          </div>
+
+          <div class="mb-3">
+            <label for="role" class="form-label">Rol</label>
+            <select class="form-select" id="role" name="role" required>
+              <option value="" disabled selected>Seleccione un rol</option>
+              <option value="ADMIN">Administrador</option>
+              <option value="CASHIER">Cajero</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-dark">Guardar Usuario del Sistema</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-12 mt-4">
+    <div class="card">
+      <div class="card-header">
+        <div class="col-12 mt-4">
+          <div class="d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0">Lista de Usuarios del Sistema</h5>
+            <button type="button" class="btn btn-dark"
+                    onclick="showSystemUserFormContainer();">Agregar Usuario
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Correo Electrónico</th>
+              <th class="text-center">Actualizar</th>
+              <th class="text-center">Eliminar</th>
+            </tr>
+            </thead>
+            <tbody id="systemUserTableBody">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script th:src="@{/js/pages/system_user.js}"></script>
+
+</th:block>

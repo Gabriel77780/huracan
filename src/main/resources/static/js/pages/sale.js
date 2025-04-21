@@ -124,30 +124,41 @@ function renderSaleProductsTable() {
 
 function addProductSaleToShoppingCar(product) {
 
-  Swal.fire("Ingrese la cantidad que desea:", {
-    content: "input",
+  Swal.fire({
+    title: 'Ingrese la cantidad que desea:',
+    input: 'text',
+    inputPlaceholder: 'Ingrese la cantidad que desea',
+    showCancelButton: true,
+    confirmButtonColor: "black",
+    cancelButtonColor: "black",
+    customClass: {
+      input: 'my-focus-style'
+    }
   })
-  .then((quantity) => {
-    const customerTableContainer = document.getElementById(
-        "customerTableContainer");
-    customerTableContainer.style.display = "none";
+  .then((result) => {
 
-    const productTableContainer = document.getElementById(
-        "productTableContainer");
-    productTableContainer.style.display = "block";
+    if (result.isConfirmed) {
+      const customerTableContainer = document.getElementById(
+          "customerTableContainer");
+      customerTableContainer.style.display = "none";
 
-    let uniqueId = Date.now().toString(36) +
-        Math.random().toString(36).substring(2);
+      const productTableContainer = document.getElementById(
+          "productTableContainer");
+      productTableContainer.style.display = "block";
 
-    shoppingCar.push({
-      id: uniqueId,
-      productId: product.id,
-      name: product.name,
-      price: product.price,
-      quantity: quantity
-    });
+      let uniqueId = Date.now().toString(36) +
+          Math.random().toString(36).substring(2);
 
-    renderSaleProductsTable();
+      shoppingCar.push({
+        id: uniqueId,
+        productId: product.id,
+        name: product.name,
+        price: product.price,
+        quantity: result.value
+      });
+
+      renderSaleProductsTable();
+    }
 
   });
 }
@@ -199,7 +210,7 @@ function executeSale() {
 
 function removeSaleProduct(index) {
   shoppingCar.splice(index, 1);
-  renderPurchaseProductsTable();
+  renderSaleProductsTable();
 }
 
 loadCustomer();

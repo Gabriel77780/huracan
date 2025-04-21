@@ -4,6 +4,7 @@ import com.sc504.huracan.exception.SystemException;
 import com.sc504.huracan.repository.SaleRepository;
 import com.sc504.huracan.dto.SaleDetailDTO;
 import com.sc504.huracan.dto.SaleRequestDTO;
+import com.sc504.huracan.security.service.SecurityService;
 import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -15,16 +16,22 @@ public class SaleService {
   
   private final ProductService productService;
 
-  public SaleService(SaleRepository saleRepository, ProductService productService) {
+  private final SecurityService securityService;
+
+  public SaleService(SaleRepository saleRepository, ProductService productService,
+      SecurityService securityService) {
     this.saleRepository = saleRepository;
     this.productService = productService;
+    this.securityService = securityService;
   }
 
   public void executeSale(SaleRequestDTO saleRequestDTO) {
 
     validateProductAvailability(saleRequestDTO);
 
-    Long saleId = saleRepository.createSale(saleRequestDTO.customerId(), 1,
+    Integer systemUserDetailsUserId = securityService.getSystemUserDetailsUserId();
+
+    Long saleId = saleRepository.createSale(saleRequestDTO.customerId(), systemUserDetailsUserId,
         calculateSaleTotal(saleRequestDTO.saleDetailDTOS()));
 
     for (SaleDetailDTO saleDetailDTO : saleRequestDTO.saleDetailDTOS()) {

@@ -6,7 +6,7 @@ document.getElementById('customerForm').addEventListener('submit', function(even
 
   const customerId = formData.get('id');
 
-  const productData = {
+  const customertData = {
     id: customerId ? formData.get('id') : null,
     name: formData.get('name'),
     email: formData.get('email'),
@@ -19,7 +19,7 @@ document.getElementById('customerForm').addEventListener('submit', function(even
       'Content-Type': 'application/json',
       [header]: token
     },
-    body: JSON.stringify(productData)
+    body: JSON.stringify(customertData)
   })
   .then(response => response.json())
   .then(data => {
