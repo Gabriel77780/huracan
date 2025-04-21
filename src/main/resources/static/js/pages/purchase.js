@@ -54,11 +54,6 @@ function showProductTableContainer() {
   productTableContainer.style.display = "block";
 }
 
-function hideProductTableContainer() {
-  const productTableContainer = document.getElementById("productTableContainer");
-  productTableContainer.style.display = "none";
-}
-
 function hideSupplierTableContainer() {
   const supplierTableContainer = document.getElementById("supplierTableContainer");
   supplierTableContainer.style.display = "none";
@@ -75,12 +70,9 @@ function hideSupplierPurchaseProductsTableContainer() {
 }
 
 function startPurchase(selectedSupplierId) {
-  const supplierTableContainer = document.getElementById("supplierTableContainer");
-  supplierTableContainer.style.display = "none";
 
-  const supplierPurchaseProductsTableContainer =
-      document.getElementById("supplierPurchaseProductsTableContainer");
-  supplierPurchaseProductsTableContainer.style.display = "block";
+  hideSupplierTableContainer();
+  showSupplierPurchaseProductsTableContainer();
 
   supplierId = selectedSupplierId;
 
@@ -129,18 +121,19 @@ function addProductPurchaseToShoppingCar(product) {
     inputPlaceholder: 'Ingrese la cantidad que desea',
     showCancelButton: true,
     confirmButtonColor: "black",
-    cancelButtonColor: "black"
+    cancelButtonColor: "black",
+    confirmButtonText: "Aceptar",
+    cancelButtonText: "Cancelar",
+    customClass: {
+      input: 'custom-focus-style'
+    }
   })
   .then((result) => {
 
     if (result.isConfirmed) {
-    const supplierTableContainer = document.getElementById(
-        "supplierTableContainer");
-    supplierTableContainer.style.display = "none";
 
-    const productTableContainer = document.getElementById(
-        "productTableContainer");
-    productTableContainer.style.display = "block";
+      hideSupplierTableContainer()
+      showProductTableContainer();
 
     let uniqueId = Date.now().toString(36) +
         Math.random().toString(36).substring(2);
@@ -193,6 +186,14 @@ function executePurchase() {
         confirmButtonColor: "black",
       });
       shoppingCar = [];
+
+      const purchaseId = data.data;
+
+      hideSupplierPurchaseProductsTableContainer();
+      hideProductTableContainer();
+      showPurchaseSummaryForm();
+      getPurchaseSummaryById(purchaseId);
+
     } else {
       Swal.fire({
         icon: "error",
@@ -208,6 +209,41 @@ function executePurchase() {
 function removePurchaseProduct(index) {
   shoppingCar.splice(index, 1);
   renderPurchaseProductsTable();
+}
+
+
+function getPurchaseSummaryById(purchaseId) {
+  fetch(`/purchase/summary/${purchaseId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  .then(response => response.json())
+  .then(result => {
+    if (result.success) {
+      fillPurchaseSummaryForm(result.data);
+    }
+  })
+  .catch(error => {
+    console.error('Error en la comunicación con el servidor:', error);
+  });
+}
+
+function fillPurchaseSummaryForm(purchaseSummary) {
+  document.getElementById('supplierName').value = purchaseSummary.supplierName;
+  document.getElementById('totalAmount').value = purchaseSummary.totalAmount;
+  document.getElementById('paidDate').value = purchaseSummary.paidDate;
+}
+
+function showPurchaseSummaryForm() {
+  const purchaseSummaryForm = document.getElementById("purchaseSummaryFormContainer");
+  purchaseSummaryForm.style.display = "block";
+}
+
+function hideProductTableContainer() {
+  const productTableContainer = document.getElementById("productTableContainer");
+  productTableContainer.style.display = "none";
 }
 
 loadSuppliers();

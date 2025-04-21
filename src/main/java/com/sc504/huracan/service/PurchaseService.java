@@ -2,7 +2,9 @@ package com.sc504.huracan.service;
 
 import com.sc504.huracan.dto.PurchaseDetailDTO;
 import com.sc504.huracan.dto.PurchaseRequestDTO;
+import com.sc504.huracan.dto.PurchaseSummaryDTO;
 import com.sc504.huracan.dto.SaleRequestDTO;
+import com.sc504.huracan.dto.SaleSummaryDTO;
 import com.sc504.huracan.repository.PurchaseRepository;
 import com.sc504.huracan.security.SystemUserDetails;
 import com.sc504.huracan.security.service.SecurityService;
@@ -24,7 +26,7 @@ public class PurchaseService {
     this.securityService = securityService;
   }
 
-  public void executePurchase(PurchaseRequestDTO purchaseRequestDTO) {
+  public Long executePurchase(PurchaseRequestDTO purchaseRequestDTO) {
 
     Integer systemUserDetailsUserId = securityService.getSystemUserDetailsUserId();
 
@@ -42,6 +44,8 @@ public class PurchaseService {
               .multiply(BigDecimal.valueOf(purchaseDetailDTO.quantity()))
       );
     }
+
+    return purchaseId;
   }
 
   private BigDecimal calculatePurchaseTotal(List<PurchaseDetailDTO> purchaseDetailDTOS) {
@@ -49,6 +53,10 @@ public class PurchaseService {
         .map(purchaseDetailDTO -> purchaseDetailDTO.price()
             .multiply(BigDecimal.valueOf(purchaseDetailDTO.quantity())))
         .reduce(BigDecimal.ZERO, BigDecimal::add);
+  }
+
+  public PurchaseSummaryDTO getPurchaseSummaryById(Long saleId) {
+    return purchaseRepository.getPurchaseSummaryById(saleId);
   }
 
 }

@@ -27,7 +27,7 @@
   </div>
 </div>
 
-  <div class="col-12 mt-4" id ="clientSaleProductsTableContainer" style="display: none;">
+  <div class="col-12 mt-4" id ="customerSaleProductsTableContainer" style="display: none;">
     <div class="card">
       <div class="card-header">
         <div class="row mt-4">
@@ -88,6 +88,37 @@
     </div>
   </div>
 </div>
+
+
+  <div id="saleSummaryFormContainer" class="col-12" style="display: none;">
+    <div class="card flex-fill">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Resume de Facturación</h5>
+      </div>
+
+      <div class="card-body">
+        <form id="saleSummaryForm">
+
+          <div class="mb-3">
+            <label for="customerName" class="form-label">Nombre del Cliente</label>
+            <input type="text" class="form-control" id="customerName" name="customerName" disabled>
+          </div>
+
+          <div class="mb-3">
+            <label for="totalAmount" class="form-label">Monto Total</label>
+            <input type="text" class="form-control" id="totalAmount" name="totalAmount" disabled>
+          </div>
+
+          <div class="mb-3">
+            <label for="paidDate" class="form-label">Fecha de Pago</label>
+            <input type="text" class="form-control" id="paidDate" name="paidDate" disabled>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
 
   <script th:src="@{/js/pages/sale.js}"></script>
 

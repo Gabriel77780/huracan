@@ -6912,4 +6912,4 @@ body {
 
 /*# sourceMappingURL=kaiadmin.css.map */
 
-.swal2-input.my-focus-style:focus {border:2px solid black;box-shadow: 0 0 5px black;}
+.swal2-input.custom-focus-style:focus {border:2px solid black;box-shadow: 0 0 5px black;}

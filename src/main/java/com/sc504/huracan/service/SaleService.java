@@ -1,5 +1,6 @@
 package com.sc504.huracan.service;
 
+import com.sc504.huracan.dto.SaleSummaryDTO;
 import com.sc504.huracan.exception.SystemException;
 import com.sc504.huracan.repository.SaleRepository;
 import com.sc504.huracan.dto.SaleDetailDTO;
@@ -25,7 +26,7 @@ public class SaleService {
     this.securityService = securityService;
   }
 
-  public void executeSale(SaleRequestDTO saleRequestDTO) {
+  public Long executeSale(SaleRequestDTO saleRequestDTO) {
 
     validateProductAvailability(saleRequestDTO);
 
@@ -44,6 +45,8 @@ public class SaleService {
               .multiply(BigDecimal.valueOf(saleDetailDTO.quantity()))
       );
     }
+
+    return saleId;
   }
 
   private void validateProductAvailability(SaleRequestDTO saleRequestDTO) {
@@ -61,6 +64,10 @@ public class SaleService {
         .map(saleDetailDTO -> saleDetailDTO.price()
             .multiply(BigDecimal.valueOf(saleDetailDTO.quantity())))
         .reduce(BigDecimal.ZERO, BigDecimal::add);
+  }
+
+  public SaleSummaryDTO getSaleSummaryById(Long saleId) {
+    return saleRepository.getSaleSummaryById(saleId);
   }
 
 }

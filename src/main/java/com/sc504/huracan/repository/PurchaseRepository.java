@@ -1,6 +1,8 @@
 package com.sc504.huracan.repository;
 
+import com.sc504.huracan.dto.PurchaseSummaryDTO;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.Map;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -59,6 +61,26 @@ public class PurchaseRepository {
             "p_price", price,
             "p_subtotal", subtotal
         )
+    );
+  }
+
+  public PurchaseSummaryDTO getPurchaseSummaryById(Long purchaseId) {
+    SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+        .withProcedureName("get_purchase_summary_by_id_sp")
+        .declareParameters(
+            new SqlParameter("p_purchase_id", Types.NUMERIC),
+            new SqlOutParameter("p_supplier_name", Types.VARCHAR),
+            new SqlOutParameter("p_total_amount", Types.NUMERIC),
+            new SqlOutParameter("p_sale_date", Types.VARCHAR)
+        );
+
+    Map<String, Object> result = jdbcCall.execute(Map.of("p_purchase_id", purchaseId));
+
+    return new PurchaseSummaryDTO(
+        purchaseId,
+        (String) result.get("p_supplier_name"),
+        (BigDecimal) result.get("p_total_amount"),
+        (String) result.get("p_sale_date")
     );
   }
 

@@ -89,6 +89,36 @@
     </div>
   </div>
 
+  <div id="purchaseSummaryFormContainer" class="col-12" style="display: none;">
+    <div class="card flex-fill">
+      <div class="card-header">
+        <h5 class="card-title mb-0">Resumen de Compra</h5>
+      </div>
+
+      <div class="card-body">
+        <form id="purchaseSummaryForm">
+
+          <div class="mb-3">
+            <label for="supplierName" class="form-label">Nombre del Cliente</label>
+            <input type="text" class="form-control" id="supplierName" name="supplierName" disabled>
+          </div>
+
+          <div class="mb-3">
+            <label for="totalAmount" class="form-label">Monto Total</label>
+            <input type="text" class="form-control" id="totalAmount" name="totalAmount" disabled>
+          </div>
+
+          <div class="mb-3">
+            <label for="paidDate" class="form-label">Fecha de Pago</label>
+            <input type="text" class="form-control" id="paidDate" name="paidDate" disabled>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+
   <script th:src="@{/js/pages/purchase.js}"></script>
 
 </th:block>
