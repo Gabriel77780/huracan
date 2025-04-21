@@ -100,4 +100,3 @@ EXCEPTION
       p_password := NULL;
       p_role := NULL;
 END;
-END;
