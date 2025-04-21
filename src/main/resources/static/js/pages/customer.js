@@ -4,17 +4,17 @@ document.getElementById('customerForm').addEventListener('submit', function(even
 
   const formData = new FormData(this);
 
-  const productId = formData.get('id');
+  const customerId = formData.get('id');
 
   const productData = {
-    id: productId ? formData.get('id') : null,
+    id: customerId ? formData.get('id') : null,
     name: formData.get('name'),
     email: formData.get('email'),
     phone: parseFloat(formData.get('phone'))
   };
 
   fetch('/customer', {
-    method: productId ? "PUT" : "POST",
+    method: customerId ? "PUT" : "POST",
     headers: {
       'Content-Type': 'application/json',
       [header]: token
@@ -43,9 +43,6 @@ function editCustomer(id) {
   fetch(`/customer/${id}`)
   .then(response => response.json())
   .then(customer => {
-
-    console.log(customer)
-
     document.getElementById("id").value = customer.id;
     document.getElementById("name").value = customer.name;
     document.getElementById("email").value = customer.email;
@@ -105,8 +102,8 @@ function loadCustomer() {
       row.innerHTML = `
           <td>${customer.name}</td>
           <td>${customer.email}</td>
-          <td><button class="btn btn-primary btn-sm" onclick="editCustomer(${customer.id})">Actualizar</button></td>
-          <td><button class="btn btn-danger btn-sm" onclick="deleteCustomer(${customer.id})">Eliminar</button></td>
+          <td class="text-center"><button class="btn btn-primary btn-sm" onclick="editCustomer(${customer.id})"><i class="fas fa-list"></i></button></td>
+          <td class="text-center"><button class="btn btn-danger btn-sm" onclick="deleteCustomer(${customer.id})"><i class="fas fa-trash"></i></button></td>
         `;
       tableBody.appendChild(row);
     });

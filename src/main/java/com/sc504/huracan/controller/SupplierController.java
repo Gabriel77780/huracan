@@ -1,9 +1,8 @@
 package com.sc504.huracan.controller;
 
 import com.sc504.huracan.api.ApiResponseDTO;
-import com.sc504.huracan.model.Customer;
-import com.sc504.huracan.model.Product;
-import com.sc504.huracan.service.CustomerService;
+import com.sc504.huracan.model.Supplier;
+import com.sc504.huracan.service.SupplierService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,53 +17,52 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/customer")
-public class CustomerController {
+@RequestMapping("/supplier")
+public class SupplierController {
 
-  private final CustomerService customerService;
+  private final SupplierService supplierService;
 
   @Autowired
-  public CustomerController(CustomerService customerService) {
-    this.customerService = customerService;
+  public SupplierController(SupplierService supplierService) {
+    this.supplierService = supplierService;
   }
 
   @PostMapping
-  public ResponseEntity<ApiResponseDTO> createCustomer(@RequestBody Customer customer) {
-    customerService.createCustomer(customer);
+  public ResponseEntity<ApiResponseDTO> createSupplier(@RequestBody Supplier supplier) {
+    supplierService.createSupplier(supplier);
     return ResponseEntity.ok(new ApiResponseDTO(true, HttpStatus.OK.value(),
-        "Cliente creado correctamente"));
+        "Proveedor creado correctamente"));
   }
 
   @GetMapping("/{id}")
-  public Customer getProduct(@PathVariable Long id) {
-    return customerService.getCustomerById(id);
+  public Supplier getProduct(@PathVariable Long id) {
+    return supplierService.getSupplierById(id);
   }
 
   @PutMapping
-  public ResponseEntity<ApiResponseDTO> updateProduct(@RequestBody Customer customer) {
-    customerService.updateCustomer(customer);
+  public ResponseEntity<ApiResponseDTO> updateProduct(@RequestBody Supplier supplier) {
+    supplierService.updateSupplier(supplier);
     return ResponseEntity.ok(new ApiResponseDTO(true, HttpStatus.OK.value(),
-        "Cliente actualizado correctamente"));
+        "Proveedor actualizado correctamente"));
   }
 
   @DeleteMapping("/{id}")
   public ResponseEntity<ApiResponseDTO> deleteProduct(@PathVariable Long id) {
 
-    boolean success = customerService.deleteCustomer(id);
+    boolean success = supplierService.deleteSupplier(id);
 
     if (success) {
       return ResponseEntity.ok(new ApiResponseDTO(true, HttpStatus.OK.value(),
-          "Cliente eliminado correctamente"));
+          "Proveedor eliminado correctamente"));
     }
 
     return ResponseEntity.ok(new ApiResponseDTO(false, HttpStatus.NOT_FOUND.value(),
-        "Cliente no encontrado"));
+        "Proveedor no encontrado"));
   }
 
   @GetMapping("/all")
-  public List<Customer> getAllProducts() {
-    return customerService.getAllCustomers();
+  public List<Supplier> getAllProducts() {
+    return supplierService.getAllSuppliers();
   }
-
 
 }

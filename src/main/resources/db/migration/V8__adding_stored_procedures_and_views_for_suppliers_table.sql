@@ -1,10 +1,10 @@
-CREATE OR REPLACE PROCEDURE create_customer_sp(
+CREATE OR REPLACE PROCEDURE create_supplier_sp(
     p_name      IN VARCHAR2,
     p_email     IN VARCHAR2,
     p_phone     IN VARCHAR2
 ) AS
 BEGIN
-INSERT INTO customer (name, email, phone, created_at)
+INSERT INTO supplier (name, email, phone, created_at)
 VALUES (p_name, p_email, p_phone, CURRENT_TIMESTAMP);
 
 COMMIT;
@@ -15,11 +15,11 @@ WHEN OTHERS THEN
 END;
 /
 
-CREATE OR REPLACE VIEW customer_details_view AS
+CREATE OR REPLACE VIEW supplier_details_view AS
 SELECT id, name, email, phone, created_at
-FROM customer;
+FROM supplier;
 
-CREATE OR REPLACE PROCEDURE get_customer_by_id_sp(
+CREATE OR REPLACE PROCEDURE get_supplier_by_id_sp(
     p_id            IN NUMBER,
     p_name          OUT VARCHAR2,
     p_email         OUT VARCHAR2,
@@ -29,7 +29,7 @@ CREATE OR REPLACE PROCEDURE get_customer_by_id_sp(
 BEGIN
 SELECT name, email, phone, created_at
 INTO p_name, p_email, p_phone, p_created_at
-FROM customer_details_view
+FROM supplier_details_view
 WHERE id = p_id;
 
 EXCEPTION
@@ -44,14 +44,14 @@ WHEN OTHERS THEN
 END;
 /
 
-CREATE OR REPLACE PROCEDURE update_customer_sp(
+CREATE OR REPLACE PROCEDURE update_supplier_sp(
     p_id        IN NUMBER,
     p_name      IN VARCHAR2,
     p_email     IN VARCHAR2,
     p_phone     IN VARCHAR2
 ) AS
 BEGIN
-UPDATE customer
+UPDATE supplier
 SET name = p_name,
     email = p_email,
     phone = p_phone
@@ -65,11 +65,11 @@ WHEN OTHERS THEN
 END;
 /
 
-CREATE OR REPLACE PROCEDURE delete_customer_sp(
+CREATE OR REPLACE PROCEDURE delete_supplier_sp(
     p_id IN NUMBER
 ) AS
 BEGIN
-DELETE FROM customer WHERE id = p_id;
+DELETE FROM supplier WHERE id = p_id;
 COMMIT;
 EXCEPTION
 WHEN OTHERS THEN
@@ -78,15 +78,15 @@ WHEN OTHERS THEN
 END;
 /
 
-CREATE OR REPLACE VIEW customer_view AS
+CREATE OR REPLACE VIEW supplier_view AS
 SELECT id, name, email, phone
-FROM customer;
+FROM supplier;
 /
 
-CREATE OR REPLACE PROCEDURE get_all_customer_sp(
-  p_customer_cursor OUT SYS_REFCURSOR
+CREATE OR REPLACE PROCEDURE get_all_supplier_sp(
+  p_supplier_cursor OUT SYS_REFCURSOR
 ) AS
 BEGIN
-OPEN p_customer_cursor FOR
-SELECT * FROM customer_view;
+OPEN p_supplier_cursor FOR
+SELECT * FROM supplier_view;
 END;

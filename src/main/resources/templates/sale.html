@@ -1,0 +1,94 @@
+<th:block th:fragment="content">
+
+<div class="col-12 mt-4" id ="customerTableContainer">
+  <div class="card">
+    <div class="card-header">
+      <div class="col-12 mt-4">
+        <div class="d-flex justify-content-between align-items-center">
+          <h5 class="card-title mb-0">Lista de Clientes</h5>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Correo Electrónico</th>
+          <th class="text-center">Facturación</th>
+        </tr>
+        </thead>
+        <tbody id="customerTableBody">
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="col-12 mt-4" id ="clientSaleProductsTableContainer" style="display: none;">
+    <div class="card">
+      <div class="card-header">
+        <div class="row mt-4">
+          <div class="col-md-6 d-flex align-items-center">
+            <h5 class="card-title mb-0">Productos por Facturar</h5>
+          </div>
+          <div class="col-md-6 d-flex justify-content-end align-items-center gap-2">
+            <button type="button" class="btn btn-success" id="addProductBtn"
+                    onclick="showProductTableContainer();">Agregar Producto</button>
+            <button class="btn btn-success" onclick="executeSale()">Finalizar Venta</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+            <th class="text-center">Borrar</th>
+          </tr>
+          </thead>
+          <tbody id="clientSaleProductsTableBody">
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="col-12 mt-4" id ="productTableContainer" style="display: none;">
+  <div class="card">
+    <div class="card-header">
+      <div class="col-12 mt-4">
+        <div class="d-flex justify-content-between align-items-center">
+          <h5 class="card-title mb-0">Lista de Productos</h5>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Precio</th>
+          <th>Stock</th>
+          <th class="text-center">Agregar</th>
+        </tr>
+        </thead>
+        <tbody id="productTableBody">
+        </tbody>
+      </table>
+    </div>
+    </div>
+  </div>
+</div>
+
+  <script th:src="@{/js/pages/sale.js}"></script>
+
+</th:block>
