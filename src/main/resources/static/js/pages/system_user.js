@@ -55,7 +55,7 @@ document.getElementById('systemUserForm').addEventListener('submit', function(ev
 
 function editSystemUser(id) {
 
-  showSystemUserFormContainer();
+  showSystemUserFormContainer(false);
 
   fetch(`/system-user/${id}`)
   .then(response => response.json())
@@ -148,7 +148,15 @@ function hideSystemUserFormContainer() {
   form.style.display = 'none';
 }
 
-function showSystemUserFormContainer() {
+function showSystemUserFormContainer(newSystemUser) {
+
+  if(newSystemUser) {
+
+    document.getElementById('systemUserForm').reset();
+    document.getElementById("id").value = null;
+
+  }
+
   const form = document.getElementById('systemUserFormContainer');
   form.style.display = 'block';
 }

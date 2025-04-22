@@ -56,7 +56,7 @@ document.getElementById('productForm').addEventListener('submit', function(event
 
 function editProduct(id) {
 
-  showProductFormContainer();
+  showProductFormContainer(false);
 
   fetch(`/product/${id}`)
   .then(response => response.json())
@@ -153,7 +153,13 @@ function hideProductFormContainer() {
   form.style.display = 'none';
 }
 
-function showProductFormContainer() {
+function showProductFormContainer(newProduct) {
+
+  if(newProduct) {
+    document.getElementById("productForm").reset();
+    document.getElementById("id").value = "";
+  }
+
   const form = document.getElementById('productFormContainer');
   form.style.display = 'block';
 }

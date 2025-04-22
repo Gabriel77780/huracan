@@ -52,7 +52,7 @@ document.getElementById('customerForm').addEventListener('submit', function(even
 
 function editCustomer(id) {
 
-  showCustomerFormContainer();
+  showCustomerFormContainer(false);
 
   fetch(`/customer/${id}`)
   .then(response => response.json())
@@ -144,7 +144,13 @@ function hideCustomerFormContainer() {
   form.style.display = 'none';
 }
 
-function showCustomerFormContainer() {
+function showCustomerFormContainer(newCustomer) {
+
+  if(newCustomer) {
+    document.getElementById("customerForm").reset();
+    document.getElementById("id").value = null;
+  }
+
   const form = document.getElementById('customerFormContainer');
   form.style.display = 'block';
 }

@@ -48,7 +48,7 @@ document.getElementById('suppliersForm').addEventListener('submit', function(eve
 
 function editSupplier(id) {
 
-  showSuppliersFormContainer();
+  showSuppliersFormContainer(false);
 
   fetch(`/supplier/${id}`)
   .then(response => response.json())
@@ -142,7 +142,13 @@ function hideSuppliersFormContainer() {
   form.style.display = 'none';
 }
 
-function showSuppliersFormContainer() {
+function showSuppliersFormContainer(newSupplier) {
+
+  if(newSupplier) {
+    document.getElementById("suppliersForm").reset();
+    document.getElementById("id").value = null;
+  }
+
   const form = document.getElementById('suppliersFormContainer');
   form.style.display = 'block';
 }
