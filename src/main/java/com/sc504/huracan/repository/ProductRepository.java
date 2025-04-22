@@ -138,4 +138,15 @@ public class ProductRepository {
     return result != null && result.compareTo(BigDecimal.ONE) == 0;
   }
 
+  public boolean isProductInUse(Long productId) {
+
+    SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+        .withFunctionName("is_product_used_in_sale_detail_fn");
+
+    BigDecimal result = jdbcCall
+        .executeFunction(BigDecimal.class, Map.of("p_product_id", productId));
+
+    return result != null && result.compareTo(BigDecimal.ONE) == 0;
+  }
+
 }

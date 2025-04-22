@@ -1,6 +1,7 @@
 package com.sc504.huracan.repository;
 
 import com.sc504.huracan.model.Customer;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.List;
@@ -100,6 +101,17 @@ public class CustomerRepository {
 
     return result.get("p_customer_cursor")!= null ?
         (List<Customer>) result.get("p_customer_cursor") : List.of();
+  }
+
+  public boolean isCustomerInUse(Long customerId) {
+
+    SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+        .withFunctionName("is_customer_used_in_sale_fn");
+
+    BigDecimal result = jdbcCall
+        .executeFunction(BigDecimal.class, Map.of("p_customer_id", customerId));
+
+    return result != null && result.compareTo(BigDecimal.ONE) == 0;
   }
 
 }

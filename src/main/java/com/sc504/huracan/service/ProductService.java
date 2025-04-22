@@ -1,5 +1,6 @@
 package com.sc504.huracan.service;
 
+import com.sc504.huracan.exception.SystemException;
 import com.sc504.huracan.model.Product;
 import com.sc504.huracan.repository.ProductRepository;
 import java.util.List;
@@ -28,6 +29,10 @@ public class ProductService {
   }
 
   public boolean deleteProduct(Long id) {
+
+    if (productRepository.isProductInUse(id)) {
+      throw new SystemException("El producto no se puede eliminar porque está en uso.");
+    }
 
     return productRepository.deleteProduct(id);
 

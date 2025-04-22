@@ -1,5 +1,6 @@
 package com.sc504.huracan.service;
 
+import com.sc504.huracan.exception.SystemException;
 import com.sc504.huracan.model.Customer;
 import com.sc504.huracan.model.Product;
 import com.sc504.huracan.repository.CustomerRepository;
@@ -36,11 +37,18 @@ public class CustomerService {
   }
 
   public boolean deleteCustomer(Long id) {
+
+    if (customerRepository.isCustomerInUse(id)) {
+      throw new SystemException("El cliente no se puede eliminar porque está en uso.");
+    }
+
     return customerRepository.deleteCustomer(id);
   }
 
   public List<Customer> getAllCustomers() {
     return customerRepository.getAllCustomers();
   }
+
+
 
 }
